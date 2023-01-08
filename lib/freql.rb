@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "freql/version"
-require_relative "freql/unit"
+require_relative "freql/fq"
+require_relative "freql/fpmw"
+require_relative "freql/fpbw"
+require_relative "freql/zipf"
+require_relative "freql/cb"
 
 module Freql
   class Error < StandardError; end
