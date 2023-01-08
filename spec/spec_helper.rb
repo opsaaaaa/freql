@@ -2,6 +2,12 @@
 
 require "freql"
 
+million = 1000000
+billion = 1000000000
+
+zipf_max = 9
+zipf_small = 1
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
