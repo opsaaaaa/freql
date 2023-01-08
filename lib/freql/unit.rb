@@ -5,24 +5,25 @@ module Freql
   MILLION = 1000000
   BILLION = 1000000000
 
-  module Freq
+  module FQ
     # frequency represented as a proportion between 0 and 1
     # occurances in corpus divided by total words in corpus
 
     # practicle range 0.053(the) 0.00000001(trella)
     # actual range 0 to 1
-
-    def to_fpmw freq
-      freq * 1000000
-    end
-    def to_fpbw freq
-      freq * 1000000000
-    end
-    def to_zipf freq
-      Math.log10(freq)+9
-    end
-    def to_cb freq
-      Math.log10(freq) * 100.0
+    class << self
+      def to_fpmw fq
+        fq * 1000000
+      end
+      def to_fpbw fq
+        fq * 1000000000
+      end
+      def to_zipf fq
+        Math.log10(fq)+9
+      end
+      def to_cb fq
+        Math.log10(fq) * 100.0
+      end
     end
   end
 
@@ -44,17 +45,19 @@ module Freql
     # - the issue with fpmw is that rare words can have a fpmw of less than 1
     # - and its not easy for humans to compare.
 
-    def to_freq fpmw
-      fpmw / 1000000.0
-    end
-    def to_fpbw fpmw
-      fpmw * 1000
-    end
-    def to_zipf fpmw
-      Math.log10(fpmw * 1000)
-    end
-    def to_cb fpmw
-      Math.log10(fpmw / 1000000) * 100.0
+    class << self
+      def to_fq fpmw
+        fpmw / 1000000.0
+      end
+      def to_fpbw fpmw
+        fpmw * 1000
+      end
+      def to_zipf fpmw
+        Math.log10(fpmw * 1000)
+      end
+      def to_cb fpmw
+        Math.log10(fpmw / 1000000.0) * 100.0
+      end
     end
   end
 
@@ -64,17 +67,19 @@ module Freql
 
     # The advantages over fpbw is that values are far less likely to dip below 1
 
-    def to_freq fpbw
-      fpbw / 1000000000.0
-    end
-    def to_fpmw fpbw
-      fpbw / 1000
-    end
-    def to_zipf fpbw
-      Math.log10(fpbw)
-    end
-    def to_cb fpbw
-      Math.log10(fpbw / 1000000000) * 100.0
+    class << self
+      def to_fq fpbw
+        fpbw / 1000000000.0
+      end
+      def to_fpmw fpbw
+        fpbw / 1000
+      end
+      def to_zipf fpbw
+        Math.log10(fpbw)
+      end
+      def to_cb fpbw
+        Math.log10(fpbw / 1000000000.0) * 100.0
+      end
     end
   end
 
@@ -84,8 +89,8 @@ module Freql
     # practical range -127(the) to -799
     # actuall range is 0 to -900(or less)
 
-    # cb is the word frequency unit used the dataset from the python wordfreq program.
-    # https://github.com/rspeer/wordfreq
+    # cb is the word frequency unit used the dataset from the python wordfq program.
+    # https://github.com/rspeer/wordfq
 
     # > 0 cB represents a word that occurs with probability 1, so it is the only
     # > word in the data (this of course doesn't happen). -200 cB represents a
@@ -102,26 +107,28 @@ module Freql
     # Disadvantages
     # - its less human readable.
 
-    # In the wordfreq program they 'bin' the data to reduce the file size further.
+    # In the wordfq program they 'bin' the data to reduce the file size further.
     # array[ bin[ "words", ...], ... ]
     # The index of the bin represents the positive frequency value.
     # you end up with a lot of leading empty bins, but after that it gets really effecient.
 
-    def to_freq cb    
-      raise ArgumentError, "cb freq cannot be positive number" if cb > 0
-      10.00 ** (cb / 100.00)
-    end
-    def to_fpmw cb
-      raise ArgumentError, "cb freq cannot be positive number" if cb > 0
-      (10.00 ** (-(cb.abs) / 100.00)) * 1000000
-    end
-    def to_fpbw cb
-      raise ArgumentError, "cb freq cannot be positive number" if cb > 0
-      (10.00 ** (-(cb.abs) / 100.00)) * 1000000000
-    end
-    def to_zipf cb
-      raise ArgumentError, "cb freq cannot be positive number" if cb > 0
-      (cb + 900.00) / 100.00
+    class << self
+      def to_fq cb    
+        raise ArgumentError, "cb fq cannot be positive number" if cb > 0
+        10.00 ** (cb / 100.00)
+      end
+      def to_fpmw cb
+        raise ArgumentError, "cb fq cannot be positive number" if cb > 0
+        (10.00 ** (-(cb.abs) / 100.00)) * 1000000
+      end
+      def to_fpbw cb
+        raise ArgumentError, "cb fq cannot be positive number" if cb > 0
+        (10.00 ** (-(cb.abs) / 100.00)) * 1000000000
+      end
+      def to_zipf cb
+        raise ArgumentError, "cb fq cannot be positive number" if cb > 0
+        (cb + 900.00) / 100.00
+      end
     end
   end
 
@@ -139,17 +146,19 @@ module Freql
     # - It requires decimials for accuracy.
     # - Technically it can cross 0 with extremely rare items in large datasets.
 
-    def to_freq zipf
-      10.00**zipf / 1e9
-    end
-    def to_fpmw zipf
-      10.00 ** zipf / 1000
-    end
-    def to_fpbw zipf
-      10.00 ** zipf
-    end
-    def to_cb zipf
-      (zipf * 100.0) - 900.00
+    class << self
+      def to_fq zipf
+        10.00**zipf / 1e9
+      end
+      def to_fpmw zipf
+        10.00 ** zipf / 1000
+      end
+      def to_fpbw zipf
+        10.00 ** zipf
+      end
+      def to_cb zipf
+        (zipf * 100.0) - 900.00
+      end
     end
   end
 
