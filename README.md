@@ -1,10 +1,8 @@
 # Freql
 
 *aka. ((word) Freqency Lang/Lib)*
-{: .small }
 
 A library for handling word/token freqencies.
-
 Right now all we do is convert fpmw to zipf and other units.
 
 
