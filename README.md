@@ -22,7 +22,7 @@ Right now all we do is convert fpmw to zipf and other units.
 
 | name | Advantages | Disadvantages |
 | --- | --- | --- |
-| fq |
+| fq | simple | ...lots and lots of decimals |
 | fpmw | Its straight forward to calculated and understand | Its not easy for humans to compare. for some words its less than 1 |
 | fpbw | words arn't going to be less than one. | nobody uses it |
 | zipf scale | Easy for humans to compare. | requires decimals for accuracy |
