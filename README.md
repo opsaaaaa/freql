@@ -1,24 +1,109 @@
 # Freql
 
-TODO: Delete this and the text below, and describe your gem
+*aka. ((word) Freqency Lang/Lib)*
+{: .small }
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/freql`. To experiment with that code, run `bin/console` for an interactive prompt.
+A library for handling word/token freqencies.
+
+Right now all we do is convert fpmw to zipf and other units.
+
+
+
+## Lets educate you about word frequency units real quick.
+
+### rank
+the relative rank of how common a word is within your corpus.
+the #1, just #41
+
+### freq
+frequency represented as a proportion between 0 and 1
+occurances in corpus divided by total words in corpus
+
+practicle range 0.053(the) 0.00000001(trella)
+actual range 0 to 1
+
+### fpmw
+
+frequency per million words.
+or the number of times a word occurs in one million words
+Practical range 53703(the) to 0.01(trella)
+actual range is from 1000000 to 0
+
+a fpmw of 1 means that word occurs 1 once on average for every million words
+a fpmw of 1,000,000 would mean every word/token in the corpus was the same.
+
+Advantages
+- Its straight forward to calculated and understand.
+- corpus size doesn't change the relative value.
+- Its a old standard.
+
+Disadvantages:
+- the issue with fpmw is that rare words can have a fpmw of less than 1
+- and its not easy for humans to compare.
+
+### fpbw
+
+frequency per billion words.
+the same as fpmw but with a billion instead of million.
+  
+The advantages over fpbw is that values are far less likely to dip below 1
+
+
+### cB
+Its a word frequency from of logarithmic centibel scale.
+
+practical range -127(the) to -799
+actuall range is 0 to -900(or less)
+
+cb is the word frequency unit used by our inital dataset pulled from the wordfreq program.
+https://github.com/rspeer/wordfreq
+
+> 0 cB represents a word that occurs with probability 1, so it is the only
+> word in the data (this of course doesn't happen). -200 cB represents a
+> word that occurs once per 100 tokens, -300 cB represents a word that
+> occurs once per 1000 tokens, and so on.
+
+Advantages
+- Its very similar to zipf, but with a different scale and 0 point.
+- Its really good for storage sizes.
+- Its always less than 0, so rare values cant cross 0.
+- and numbers are larger, so you dont need decimils for reasonable accuracy.
+- you can easilly save them as positive integers.
+
+Disadvantages
+- its less human readable.
+
+In the wordfreq program they 'bin' the data to reduce the file size further.
+array[ bin[ "words", ...], ... ]
+The index of the bin represents the positive frequency value.
+you end up with a lot of leading empty bins, but after that it gets really effecient.
+
+### zipf scale
+Its log10 of frequency per billion words
+Named after the American linguist George Kingsley Zipf
+
+Practical Range 1-7ish 1.01(the) to 7.73(trella). *(wait i might have that backwards...)*
+Actual Range is 9.0 to 0.0(or less technically)
+
+Advantages
+- Its human readable and its a known common standerd.
+
+Disavantages
+- It requires decimials for accuracy.
+- Technically it can cross 0 with extremely rare items in large datasets.
+
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add freql
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install freql
 
 ## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
