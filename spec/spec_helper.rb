@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "freql"
+require "pry"
 
 RSpec.configure do |config|
   MILLION = 1000000

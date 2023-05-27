@@ -6,6 +6,7 @@ require_relative "freql/fpmw"
 require_relative "freql/fpbw"
 require_relative "freql/zipf"
 require_relative "freql/cb"
+require_relative "freql/bindata"
 
 module Freql
   class Error < StandardError; end
