@@ -29,7 +29,7 @@ module Freql
     # you end up with a lot of leading empty bins, but after that it gets really effecient.
 
     class << self
-      def to_fq cb    
+      def to_fq cb
         raise ArgumentError, "cb fq cannot be positive number" if cb > 0
         10.00 ** (cb / 100.00)
       end
