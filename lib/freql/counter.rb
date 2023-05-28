@@ -1,6 +1,6 @@
 
 module Freql
-  class Count
+  class Counter
 
     # Calculate word/token frequencies from various inputs
 
@@ -11,8 +11,8 @@ module Freql
     attr :tokens
 
     def initialize tokens: {}, total: 0
-      @tokens = tokens || {}
-      @total = total || 0
+      @tokens = tokens
+      @total = total
     end
 
     def add_array source
@@ -37,7 +37,20 @@ module Freql
         @tokens[token] = 1
       end
     end
-    
+
+    def compute_cb
+      @total = @total.to_f
+      tokens.transform_values {|count| CB.calc(count,@total)}
+    end
+
+    def compute_zipf
+      @total = @total.to_f
+      tokens.transform_values {|count| ZipF.calc(count,@total)}
+    end
+
+    def compute_bindata
+      BinData.pack(tokens.transform_values {|count| CB.calc(count,@total).abs.round})
+    end
 
 
   end

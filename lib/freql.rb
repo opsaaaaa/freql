@@ -7,7 +7,7 @@ require_relative "freql/fpbw"
 require_relative "freql/zipf"
 require_relative "freql/cb"
 require_relative "freql/bindata"
-require_relative "freql/count"
+require_relative "freql/counter"
 
 module Freql
 
