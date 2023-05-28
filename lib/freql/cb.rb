@@ -45,6 +45,10 @@ module Freql
         raise ArgumentError, "cb fq cannot be positive number" if cb > 0
         (cb + 900.00) / 100.00
       end
+
+      def calc occurances, total
+        Math.log10(occurances / total.to_f) * 100.0
+      end
     end
   end
 end

@@ -1,4 +1,5 @@
 module Freql
+
   module FQ
     # frequency represented as a proportion between 0 and 1
     # occurances in corpus divided by total words in corpus
@@ -17,6 +18,10 @@ module Freql
       end
       def to_cb fq
         Math.log10(fq) * 100.0
+      end
+
+      def calc occurances, total
+        occurances / total.to_f
       end
     end
   end

@@ -26,6 +26,10 @@ module Freql
       def to_cb zipf
         (zipf * 100.0) - 900.00
       end
+
+      def calc occurances, total
+        Math.log10(occurances / total.to_f)+9
+      end
     end
   end
 end

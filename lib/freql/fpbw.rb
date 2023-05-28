@@ -18,6 +18,10 @@ module Freql
       def to_cb fpbw
         Math.log10(fpbw / 1000000000.0) * 100.0
       end
+
+      def calc occurances, total
+        (occurances / total.to_f) * 1000000000
+      end
     end
   end
 end

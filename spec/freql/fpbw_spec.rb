@@ -30,5 +30,12 @@ RSpec.describe Freql::FPBW do
       end
     end
   end
+
+  context 'calc' do
+    it('calc(1, 2) => BILLION/2') {expect(subject.calc(1,2)).to eq(BILLION/2)}
+    it('calc(0, 3) => 0.0') {expect(subject.calc(0,3)).to eq(0)}
+    it('calc(5, 5) => BILLION') {expect(subject.calc(5,5)).to eq(BILLION)}
+  end
+
 end
 
