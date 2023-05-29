@@ -9,13 +9,14 @@ module Freql
 
     attr :total
     attr :tokens
-
+ 
     def initialize tokens: {}, total: 0
       @tokens = tokens
       @total = total
     end
 
     def add_array source
+      @total += source.length
       source.each do |token|
         add_token(token)
       end
@@ -23,19 +24,20 @@ module Freql
     end
 
     def add_words source
-      source.scan(/\w+/) do |word|
-        add_token(word)
-      end
-      self
+      add_array(source.scan(/\w+/))
     end
 
-    def add_token token
+    def add_single_token token
       @total += 1
-      if @tokens.has_key?(token)
-        @tokens[token] += 1
-      else
-        @tokens[token] = 1
+      add_token(token)
+    end
+
+    def add_inflated_pairs source, size = 2
+      out = []
+      for x in 0..(source.length-size) do
+        out << source[x...x+size]
       end
+      add_array(out)
     end
 
     def compute_cb
@@ -51,6 +53,18 @@ module Freql
     def compute_bindata
       BinData.pack(tokens.transform_values {|count| CB.calc(count,@total).abs.round})
     end
+
+
+    private
+
+    def add_token token
+      if @tokens.has_key?(token)
+        @tokens[token] += 1
+      else
+        @tokens[token] = 1
+      end
+    end
+
 
 
   end

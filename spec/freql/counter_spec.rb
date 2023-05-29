@@ -27,6 +27,23 @@ RSpec.describe Freql::Counter do
     it('.total == 6') {expect(subject.total).to eq(6)} 
   end
 
+  context '.add_inflated_pairs "weather" "feather"' do
+    subject do
+      c = Freql::Counter.new()
+      c.add_inflated_pairs('weather', 4)
+      c.add_inflated_pairs('feather', 4)
+      return c.tokens
+    end
+
+    it {is_expected.to eq({
+      'weat'=>1,
+      'feat'=>1,
+      'eath'=>2,
+      'athe'=>2,
+      'ther'=>2,
+    })}
+  end
+
   context '.compute*' do
     subject do
       Freql::Counter.new( tokens: {'one'=>1,'two'=>10,'three'=>100,'four'=>1000,'five'=>10000}, total: MILLION)
