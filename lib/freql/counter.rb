@@ -24,12 +24,16 @@ module Freql
     end
 
     def add_words source
-      add_array(source.scan(/\w+/))
+      add_matches(source, /\w+/)
     end
 
     def add_single_token token
       @total += 1
       add_token(token)
+    end
+
+    def add_matches source, pattern
+      add_array(source.scan(pattern))
     end
 
     def add_inflated_pairs source, size = 2

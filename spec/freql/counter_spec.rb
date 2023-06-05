@@ -44,6 +44,16 @@ RSpec.describe Freql::Counter do
     })}
   end
 
+  context '.add_matches' do
+    subject do
+      Freql::Counter.new().add_matches("bite mite kite there where".gsub(/[^aeiouy\s]/, '_'), /[^\s_]_[^\s__]/).tokens
+    end
+    it {is_expected.to eq({
+      'i_e'=>3,
+      'e_e'=>2,
+    })}
+  end
+
   context '.compute*' do
     subject do
       Freql::Counter.new( tokens: {'one'=>1,'two'=>10,'three'=>100,'four'=>1000,'five'=>10000}, total: MILLION)
