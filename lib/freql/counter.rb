@@ -46,16 +46,16 @@ module Freql
 
     def compute_cb
       @total = @total.to_f
-      tokens.transform_values {|count| CB.calc(count,@total)}
+      tokens.transform_values {|count| CB.calc_cb(count,@total)}
     end
 
     def compute_zipf
       @total = @total.to_f
-      tokens.transform_values {|count| ZipF.calc(count,@total)}
+      tokens.transform_values {|count| ZipF.calc_zipf(count,@total)}
     end
 
     def compute_bindata
-      BinData.pack(tokens.transform_values {|count| CB.calc(count,@total).abs.round})
+      BinData.pack(tokens.transform_values {|count| CB.calc_cb(count,@total).abs.round})
     end
 
 
