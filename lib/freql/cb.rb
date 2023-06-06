@@ -1,6 +1,6 @@
 module Freql
   module CB
-    # Its a word frequency from of logarithmic centibel scale.
+    # CB is a word frequency from of logarithmic centibel scale.
 
     # practical range -127(the) to -799
     # actuall range is 0 to -900(or less)
@@ -29,24 +29,20 @@ module Freql
     # you end up with a lot of leading empty bins, but after that it gets really effecient.
 
     class << self
-      def to_fq cb
-        raise ArgumentError, "cb fq cannot be positive number" if cb > 0
-        10.00 ** (cb / 100.00)
+      def cb_to_fq cb
+        10.00 ** (-cb.abs / 100.00)
       end
-      def to_fpmw cb
-        raise ArgumentError, "cb fq cannot be positive number" if cb > 0
-        (10.00 ** (-(cb.abs) / 100.00)) * 1000000
+      def cb_to_fpmw cb
+        (10.00 ** (-cb.abs / 100.00)) * 1000000
       end
-      def to_fpbw cb
-        raise ArgumentError, "cb fq cannot be positive number" if cb > 0
-        (10.00 ** (-(cb.abs) / 100.00)) * 1000000000
+      def cb_to_fpbw cb
+        (10.00 ** (-cb.abs / 100.00)) * 1000000000
       end
-      def to_zipf cb
-        raise ArgumentError, "cb fq cannot be positive number" if cb > 0
-        (cb + 900.00) / 100.00
+      def cb_to_zipf cb
+        (-cb.abs + 900.00) / 100.00
       end
 
-      def calc occurances, total
+      def calc_cb occurances, total
         Math.log10(occurances / total.to_f) * 100.0
       end
     end

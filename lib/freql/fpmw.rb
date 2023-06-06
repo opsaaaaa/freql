@@ -1,6 +1,6 @@
 module Freql
   module FPMW
-    # frequency per million words.
+    # fpmw frequency per million words.
     # or the number of times a word occurs in one million words
     # Practical range 53703(the) to 0.01(trella)
     # actual range is from 1000000 to 0
@@ -18,23 +18,24 @@ module Freql
     # - and its not easy for humans to compare.
 
     class << self
-      def to_fq fpmw
+      def fpmw_to_fq fpmw
         fpmw / 1000000.0
       end
-      def to_fpbw fpmw
+      def fpmw_to_fpbw fpmw
         fpmw * 1000
       end
-      def to_zipf fpmw
+      def fpmw_to_zipf fpmw
         Math.log10(fpmw * 1000)
       end
-      def to_cb fpmw
+      def fpmw_to_cb fpmw
         Math.log10(fpmw / 1000000.0) * 100.0
       end
 
-      def calc occurances, total
+      def calc_fpmw occurances, total
         (occurances / total.to_f) * 1000000
       end
     end
   end
+
 end
 

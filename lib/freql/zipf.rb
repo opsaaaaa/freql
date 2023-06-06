@@ -1,6 +1,6 @@
 module Freql
   module ZipF
-    # Its log10 of frequency per billion words
+    # ZipF is log10 of frequency per billion words
     # Named after the American linguist George Kingsley Zipf
 
     # Practical Range 1-7ish 1.01(the) to 7.73(trella). *(wait i might have that backwards...)*
@@ -14,20 +14,20 @@ module Freql
     # - Technically it can cross 0 with extremely rare items in large datasets.
 
     class << self
-      def to_fq zipf
+      def zipf_to_fq zipf
         10.00**zipf / 1e9
       end
-      def to_fpmw zipf
+      def zipf_to_fpmw zipf
         10.00 ** zipf / 1000
       end
-      def to_fpbw zipf
+      def zipf_to_fpbw zipf
         10.00 ** zipf
       end
-      def to_cb zipf
+      def zipf_to_cb zipf
         (zipf * 100.0) - 900.00
       end
 
-      def calc occurances, total
+      def calc_zipf occurances, total
         Math.log10(occurances / total.to_f)+9
       end
     end
