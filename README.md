@@ -68,7 +68,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 ## Usage
 
 I intend to add more information about usuage after the api is more finalized.
-For now you can [read the tests](specs/) to get a general idea of how to use the gem.
+For now you can [look at the tests suit](spec/) to get a general idea of how to use the gem.
 
 
 ## Development
