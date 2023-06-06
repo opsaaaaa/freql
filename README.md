@@ -2,9 +2,14 @@
 
 *aka. ((word) Freqency Lang/Lib)*
 
-A library for handling word/token freqencies.
-Right now all we do is convert fpmw to zipf and other units.
+A library for handling word/token frequencies.
 
+
+## features
+- convert cb and fpmw to zipf and other units.
+- basic lookup for word frequencies in various languages.
+- token counting tool
+- tools for building word/token frequency datasets from custom sources
 
 
 ## Lets educate you about word frequency units real quick.
@@ -29,7 +34,7 @@ Right now all we do is convert fpmw to zipf and other units.
 | cb | we can safely represent it as a positive integer without sacrificing significant accuracy | less human readable than zipf |
 
 
-### WTF does cb come from?
+### Where does cb come from?
 
 cb is the word frequency unit used by our inital dataset pulled from the wordfreq program.
 https://github.com/rspeer/wordfreq
