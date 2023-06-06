@@ -4,15 +4,19 @@ require_relative 'cb'
 module Freql
   class Words
 
-    # This is for looking up the word frequencey in various languages
+    # Lookup the cb or zipf work frequency for given words/tokens
 
-    attr_reader :words
+    # Words may not be the best name for this class in the future.
 
-    def initialize lang: :en, size: :small
-      @lang = lang
-      @size = size
-      extract_lang_file
+    class << self
+      def by_lang lang = :en, size: :small
+        w = self.new
+        w.extract_lang_file lang, size: size
+        return w
+      end
     end
+
+    attr :words
 
     def lookup word
       @words[word]
@@ -31,8 +35,8 @@ module Freql
       query(*words).transform_values {|v| CB.cb_to_zipf(v) }
     end
 
-    def extract_lang_file
-      BinData.read_and_unpack_lang( @lang, size: @size ) do |lang_data|
+    def extract_lang_file lang, size:
+      BinData.read_and_unpack_lang( lang, size: size ) do |lang_data|
         @words = lang_data
       end
     end

@@ -2,10 +2,8 @@
 module Freql
   class Counter
 
-    # Calculate word/token frequencies from various inputs
+    # Calculate word/token frequencies from various inputs provided.
 
-    # class << self
-    # end
 
     attr :total
     attr :tokens

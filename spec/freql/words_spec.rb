@@ -2,9 +2,9 @@
 require 'spec_helper'
 
 RSpec.describe Freql::Words do
+  subject { Freql::Words.by_lang(:en) }
 
   context "can check single words with .lookup" do
-    subject { Freql::Words.new(lang: :en) }
 
     it('the > 127') {expect(subject.lookup('the')).to eq(127)}
     it('word > 374') {expect(subject.lookup('word')).to eq(374)}
@@ -15,7 +15,7 @@ RSpec.describe Freql::Words do
     it('atotallywrongword > nil') {expect(subject.lookup_zipf('atotallywrongword')).to eq(nil)}
 
     context "lang: :es" do
-      subject { Freql::Words.new(lang: :es) }
+      subject { Freql::Words.by_lang(:es) }
       it('que > 148') {expect(subject.lookup('que')).to eq(148)}
     end
   end
