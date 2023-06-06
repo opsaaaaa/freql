@@ -36,7 +36,7 @@ A library for handling word/token frequencies.
 
 ### Where does cb come from?
 
-cb is the word frequency unit used by our inital dataset pulled from the wordfreq program.
+cb is the word frequency unit used by our initial dataset pulled from the wordfreq program.
 https://github.com/rspeer/wordfreq
 
 > 0 cB represents a word that occurs with probability 1, so it is the only
@@ -67,6 +67,10 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
+I intend to add more information about usuage after the api is more finalized.
+For now you can [read the tests](specs/) to get a general idea of how to use the gem.
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -79,11 +83,14 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 ## License
 
+
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+Any data under `lib/freql/data` comes from the wordfreq repsoitory and is therefore subject to its License
 
 ## Credits
 
 
-- I read the code from the python wordfq program. https://github.com/rspeer/wordfq
+- I read the code from the python wordfq program, and Im using the data provided from the source code. https://github.com/rspeer/wordfq
 
 
