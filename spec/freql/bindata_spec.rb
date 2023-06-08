@@ -50,7 +50,17 @@ RSpec.describe Freql::BinData do
     it "can be .flatten-ed" do
       expect(subject.flatten).to eq(['1','one','3','three','4','four'])
     end
+
+    it "can be written to a file and retrieved" do
+      path = 'tmp/spec/bindata_spec.msgpack.gz'
+      subject.write_msgpack_gz(path)
+      expect(File.exist?(path)).to eq(true)
+      Freql::BinData.read_msgpack_gz(path) do |saved_data|
+        expect(saved_data).to eq(subject)
+      end
+    end
   end
+
 
 end
 

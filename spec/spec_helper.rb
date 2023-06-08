@@ -2,6 +2,7 @@
 
 require "freql"
 require "pry"
+require 'fileutils'
 
 RSpec.configure do |config|
   MILLION = 1000000
@@ -12,6 +13,19 @@ RSpec.configure do |config|
 
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
+
+  config.before(:suite) do
+    FileUtils.mkdir_p 'tmp/spec'
+    FileUtils.rm_r Dir.glob('tmp/spec/*')
+  end
+
+  config.after(:each) do 
+    FileUtils.rm_r Dir.glob('tmp/spec/*')
+  end
+  
+  config.after(:suite) do 
+    FileUtils.rm_r Dir.glob('tmp/spec')
+  end
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

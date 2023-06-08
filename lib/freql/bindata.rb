@@ -24,6 +24,7 @@ module Freql
     # isn't present in the data.
 
     LANG_FILE_PATH = "lib/freql/data/%s_%s.msgpack.gz"
+    FORMAT_METADATA = {"format"=>"cB", "version"=>1}
 
     class << self
 
@@ -62,10 +63,20 @@ module Freql
         read_lang(lang, size: size) {|data| block.call( unpack(data) ) }
       end
 
+      def write_msgpack_gz path, bindata
+        Zlib::GzipWriter.open(path) do |gz|
+          gz.write(MessagePack.pack([FORMAT_METADATA] + bindata))
+        end
+      end
+
     end
 
     def unpack
       BinData.unpack self
+    end
+
+    def write_msgpack_gz path
+      BinData.write_msgpack_gz(path,self)
     end
 
     def filter_groups &block
