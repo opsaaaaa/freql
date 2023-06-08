@@ -9,9 +9,19 @@ module Freql
 
     # {'three' => 3} > [[],[],[],['three']]
 
-    # its use in the [wordfq](https://github.com/rspeer/wordfq) program
-    # to compress word frequency data.
+    # it is use in the [wordfq](https://github.com/rspeer/wordfq) program to
+    # compress word frequency data.
 
+    # The 0'ht item in the language bindata files contains version and format information
+    # ie [{"format"=>"cB", "version"=>1},[],[],...]
+    # Im choosing to respectfully ignore that information in the code for now.
+    # The rest of the data is the word frequency bindata.
+
+    # I am assuming that because a cB of 100% is 0 that the version information shifts
+    # the binData index's over by one.
+
+    # TODO: It may be good to throw an error if the version information
+    # isn't present in the data.
 
     LANG_FILE_PATH = "lib/freql/data/%s_%s.msgpack.gz"
 
@@ -39,10 +49,11 @@ module Freql
       end
 
       def read_lang lang = :en, size: :small, &block
-        Zlib::GzipReader.open(LANG_FILE_PATH % [size,lang]) do |gz|
-          # The first item in the language data contains version and format information
-          # Im choosing to ignore that information for now.
-          # The rest of the data is word frequency bindata
+        read_msgpack_gz(LANG_FILE_PATH % [size,lang],&block)
+      end
+
+      def read_msgpack_gz path, &block
+        Zlib::GzipReader.open(path) do |gz|
           block.call BinData.new(MessagePack.unpack(gz.read)[1..])
         end
       end
@@ -50,6 +61,7 @@ module Freql
       def read_and_unpack_lang lang = :en, size: :small, &block
         read_lang(lang, size: size) {|data| block.call( unpack(data) ) }
       end
+
     end
 
     def unpack
