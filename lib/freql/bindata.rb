@@ -62,5 +62,9 @@ module Freql
       end
     end
 
+    def rank
+      self.filter! {|group| !group.empty?}
+    end
+
   end
 end
