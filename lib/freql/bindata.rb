@@ -2,7 +2,7 @@ require 'zlib'
 require 'msgpack'
 
 module Freql
-  module BinData
+  class BinData < Array
 
     # BinData is a tool for compressing key=>integer pair data
     # into an array where the place of the index stores the integer value.
@@ -19,7 +19,7 @@ module Freql
 
       def pack hash_data, size: nil
         size ||= hash_data.values.max
-        bin_data = Array.new(size+1) { [] }
+        bin_data = BinData.new(size+1) { [] }
 
         hash_data.each do |key, val|
           bin_data[val.to_i] << key
@@ -43,7 +43,7 @@ module Freql
           # The first item in the language data contains version and format information
           # Im choosing to ignore that information for now.
           # The rest of the data is word frequency bindata
-          block.call MessagePack.unpack(gz.read)[1..]
+          block.call BinData.new(MessagePack.unpack(gz.read)[1..])
         end
       end
 
@@ -51,5 +51,16 @@ module Freql
         read_lang(lang, size: size) {|data| block.call( unpack(data) ) }
       end
     end
+
+    def unpack
+      BinData.unpack self
+    end
+
+    def filter_groups &block
+      self.each do |group|
+        group.filter! &block
+      end
+    end
+
   end
 end

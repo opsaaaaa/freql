@@ -18,5 +18,11 @@ RSpec.describe Freql::BinData do
     )
   end
 
+  it "can .filter_groups" do
+    bin = Freql::BinData.new([['0', 'zero'],['1', 'one'],['2', 'two'],['3', 'three']])
+    bin.filter_groups {|item| item.match?(/[^a-z]/) }
+    expect(bin).to eq([['0'],['1'],['2'],['3']])
+  end
+
 end
 
