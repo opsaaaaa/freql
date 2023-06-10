@@ -79,15 +79,27 @@ module Freql
       BinData.write_msgpack_gz(path,self)
     end
 
-    def filter_groups &block
-      self.each do |group|
-        group.filter! &block
+    def filter_bin &block
+      self.each.with_index do |group, value|
+        group.filter! do |item|
+          block.call item, value
+        end
       end
+    end
+
+    def remove_non_words!
+      filter_bin {|word| word.valid_word? }
     end
 
     def rank
       self.filter! {|group| !group.empty?}
     end
 
+  end
+end
+
+class String
+  def valid_word? 
+    self.match?(/[aeiouyAEIOUY]/) && !self.match?(/[^A-z']/)
   end
 end

@@ -26,9 +26,9 @@ RSpec.describe Freql::BinData do
       Freql::BinData.new([[],['1', 'one'],[],['3', 'three'],['4', 'four']])
     }
 
-    it "can .filter_groups" do
+    it "can .filter_bin" do
       expect(
-        subject.filter_groups {|item| item.match?(/[^a-z]/) }
+        subject.filter_bin {|item| item.match?(/[^a-z]/) }
       ).to eq([[],['1'],[],['3'],['4']])
     end
 
@@ -59,8 +59,28 @@ RSpec.describe Freql::BinData do
         expect(saved_data).to eq(subject)
       end
     end
+
+    it "can .remove_non_words!" do
+      subject.remove_non_words!
+      is_expected.to eq([[],['one'],[],['three'],['four']])
+    end
   end
 
 
 end
 
+
+RSpec.describe String do
+  context ".valid_word?" do
+    it {expect("1234".valid_word?).to eq(false)}
+    it {expect("1hundred".valid_word?).to eq(false)}
+    it {expect("two words".valid_word?).to eq(false)}
+    it {expect("bcdfghjklmnpqrstvwxz".valid_word?).to eq(false)}
+    it {expect("www.example.com".valid_word?).to eq(false)}
+    it {expect("@username".valid_word?).to eq(false)}
+    it {expect("bat's".valid_word?).to eq(true)}
+    it {expect("Capital".valid_word?).to eq(true)}
+    it {expect("a".valid_word?).to eq(true)}
+    it {expect("I".valid_word?).to eq(true)}
+  end
+end
