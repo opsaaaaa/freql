@@ -54,9 +54,12 @@ module Freql
       end
 
       def read_msgpack_gz path, &block
+        bindata = nil
         Zlib::GzipReader.open(path) do |gz|
-          block.call BinData.new(MessagePack.unpack(gz.read)[1..])
+          bindata = BinData.new(MessagePack.unpack(gz.read)[1..])
+          block.call bindata if block_given?
         end
+        bindata
       end
 
       def read_and_unpack_lang lang = :en, size: :small, &block
@@ -69,6 +72,10 @@ module Freql
         end
       end
 
+      def write_lang lang, bindata, size: :new
+        write_msgpack_gz(LANG_FILE_PATH % [size,lang], bindata)
+      end
+
     end
 
     def unpack
@@ -77,6 +84,10 @@ module Freql
 
     def write_msgpack_gz path
       BinData.write_msgpack_gz(path,self)
+    end
+
+    def write_lang lang, size:
+      BinData.write_lang(lang, self, size: size)
     end
 
     def filter_bin &block

@@ -45,6 +45,10 @@ module Freql
       def calc_cb occurances, total
         Math.log10(occurances / total.to_f) * 100.0
       end
+
+      def add cbA, cbB
+        Math.log10(((10.00 ** (-cbA.abs / 100.00)) + (10.00 ** (-cbB.abs / 100.00))).clamp(..1)) * 100.0
+      end
     end
   end
 end
