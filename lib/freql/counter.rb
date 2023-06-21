@@ -1,20 +1,13 @@
 
+require_relative 'zipf'
+require_relative 'cb'
+
 module Freql
-  class Counter
+  class Counter < Hash
 
     # Calculate word/token frequencies from various inputs provided.
 
-
-    attr :total
-    attr :tokens
- 
-    def initialize tokens: {}, total: 0
-      @tokens = tokens
-      @total = total
-    end
-
     def add_array source
-      @total += source.length
       source.each do |token|
         add_token(token)
       end
@@ -26,7 +19,6 @@ module Freql
     end
 
     def add_single_token token
-      @total += 1
       add_token(token)
     end
 
@@ -43,27 +35,28 @@ module Freql
     end
 
     def compute_cb
-      @total = @total.to_f
-      tokens.transform_values {|count| CB.calc_cb(count,@total)}
+      self.transform_values {|count| CB.calc_cb(count,total.to_f)}
     end
 
     def compute_zipf
-      @total = @total.to_f
-      tokens.transform_values {|count| ZipF.calc_zipf(count,@total)}
+      self.transform_values {|count| ZipF.calc_zipf(count,total.to_f)}
     end
 
     def compute_bindata
-      BinData.pack(tokens.transform_values {|count| CB.calc_cb(count,@total).abs.round})
+      BinData.pack(self.transform_values {|count| CB.calc_cb(count,total.to_f).abs.round})
     end
 
+    def total
+      self.sum {|k,v| v}
+    end
 
     private
 
     def add_token token
-      if @tokens.has_key?(token)
-        @tokens[token] += 1
+      if self.has_key?(token)
+        self[token] += 1
       else
-        @tokens[token] = 1
+        self[token] = 1
       end
     end
 
