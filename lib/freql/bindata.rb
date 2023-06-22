@@ -86,6 +86,10 @@ module Freql
       BinData.write_msgpack_gz(path,self)
     end
 
+    def write_txt path
+      File.write(path,self.to_txt)
+    end
+
     def write_lang lang, size:
       BinData.write_lang(lang, self, size: size)
     end
@@ -112,6 +116,10 @@ module Freql
 
     def rank
       self.filter! {|group| !group.empty?}
+    end
+
+    def to_txt
+      self.map {|i| i.join ' ' }.join("\n")
     end
 
   end

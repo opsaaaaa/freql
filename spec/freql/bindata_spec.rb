@@ -21,9 +21,23 @@ RSpec.describe Freql::BinData do
     end
   end
 
+  context "txt conversion" do
+    let(:path) {'tmp/spec/to_txt.txt'}
+    let(:txt) {"\n1 one\n\n3 three\n4 four"}
+    subject {
+      Freql::BinData[[],['1', 'one'],[],['3', 'three'],['4', 'four']]
+    }
+    it(".to_txt") {expect(subject.to_txt).to eq(txt)}
+    it(".write_txt") {
+      subject.write_txt(path)
+      expect(File.exist?(path)).to eq(true)
+      expect(File.read(path)).to eq(txt)
+    }
+  end
+
   context "instance" do
     subject {
-      Freql::BinData.new([[],['1', 'one'],[],['3', 'three'],['4', 'four']])
+      Freql::BinData[[],['1', 'one'],[],['3', 'three'],['4', 'four']]
     }
 
     it "can .filter_bin" do
