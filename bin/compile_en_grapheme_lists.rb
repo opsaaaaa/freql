@@ -6,8 +6,9 @@ require 'freql/bindata'
 require 'freql/counter'
 require 'pry'
 
+CUTTOFF = 300
 
-[1,2,3,4,5].each do |token_size|
+[1,2,3].each do |token_size|
   counter = Freql::Counter.new
   bin = Freql::BinData.read_lang(:en, size: :small)
   bin.remove_non_words!
@@ -17,6 +18,8 @@ require 'pry'
   end
 
   graphemes = counter.compute_bindata
+  
+  graphemes.slice!(CUTTOFF..)
 
   graphemes.write_lang(:en, size: "graphemes_#{token_size}")
   puts "worte #{token_size} graphemes pack"
