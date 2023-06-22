@@ -98,6 +98,14 @@ module Freql
       end
     end
 
+    def each_item &block
+      self.each.with_index do |group, value|
+        group.each do |item|
+          block.call item, value
+        end
+      end
+    end
+
     def remove_non_words!
       filter_bin {|word| word.valid_word? }
     end
