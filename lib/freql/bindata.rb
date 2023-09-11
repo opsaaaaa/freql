@@ -127,6 +127,6 @@ end
 
 class String
   def valid_word? 
-    self.match?(/[aeiouyAEIOUY]/) && !self.match?(/[^A-z']/)
+    self.match?(/[aeiouyAEIOUY]/) && !self.match?(/[^A-z']|[_]/)
   end
 end

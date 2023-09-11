@@ -4,6 +4,11 @@
 # useage:
 #   ./bin/extract_lang.rb en,jp small path/to/folder/
 
+# Extract a lang file into human readable txt version where the line number
+# represents the positive cB word frequencey
+
+# TODO: this is useful enough, perhaps it should be included in a freql commandline utility.
+
 require "bundler/setup"
 require 'freql/bindata'
 require 'pry'

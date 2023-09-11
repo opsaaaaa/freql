@@ -75,6 +75,7 @@ RSpec.describe Freql::BinData do
     end
 
     it "can .remove_non_words!" do
+      subject[0] = ["non_word_with_underscores", 'b_a', '_']
       subject.remove_non_words!
       is_expected.to eq([[],['one'],[],['three'],['four']])
     end
